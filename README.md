@@ -1,32 +1,69 @@
-# blackroad-iot-device-manager
+# BlackRoad IoT Device Manager
 
-[![GitHub](https://img.shields.io/badge/GitHub-BlackRoad-OS-purple?style=for-the-badge&logo=github)](https://github.com/BlackRoad-OS/blackroad-iot-device-manager)
-[![Status](https://img.shields.io/badge/Status-Active-success?style=for-the-badge)](https://github.com/BlackRoad-OS/blackroad-iot-device-manager)
-[![BlackRoad](https://img.shields.io/badge/BlackRoad-OS-black?style=for-the-badge)](https://blackroad.io)
+![CI](https://github.com/BlackRoad-OS/blackroad-iot-device-manager/actions/workflows/ci.yml/badge.svg)
+![Python](https://img.shields.io/badge/python-3.11-blue)
+![License](https://img.shields.io/badge/license-proprietary-red)
+![Platform](https://img.shields.io/badge/platform-BlackRoad%20OS-black)
 
-# 🖤🛣️ BlackRoad Iot Device Manager
+> Comprehensive IoT device lifecycle management — register devices, stream telemetry,
+> enforce alert rules, orchestrate firmware OTA updates, and monitor your entire fleet
+> from a single SQLite-backed CLI.
 
-Part of the BlackRoad Product Empire - 350+ enterprise solutions
+## Features
 
-## 🚀 Quick Start
+- **Device Registry** — register, group, and track any IoT device type
+- **Telemetry Ingestion** — bulk-insert metrics with automatic alert evaluation
+- **Alert Rules** — threshold-based rules with configurable severity levels
+- **Firmware OTA Queue** — queue and simulate over-the-air firmware updates
+- **Fleet Dashboard** — instant overview of online/offline counts and pending jobs
+- **Anomaly Detection** — z-score-based outlier detection on sensor streams
+
+## Installation
 
 ```bash
-./blackroad-iot-device-manager.sh
+git clone https://github.com/BlackRoad-OS/blackroad-iot-device-manager.git
+cd blackroad-iot-device-manager
+pip install pytest pytest-cov
 ```
 
-## 🎨 BlackRoad Design System
+## Usage
 
-- **Hot Pink**: #FF1D6C
-- **Amber**: #F5A623  
-- **Electric Blue**: #2979FF
-- **Violet**: #9C27B0
+### Register a device
+```bash
+python src/iot_device_manager.py register "temp-sensor-01" --type temperature --ip 192.168.1.10 --firmware 2.0.0
+```
 
-## 📚 Documentation
+### Ingest telemetry
+```bash
+python src/iot_device_manager.py telemetry <device_id> temperature:72.5:F humidity:45.2:%
+```
 
-Full docs: https://docs.blackroad.io
+### Add an alert rule
+```bash
+python src/iot_device_manager.py alert <device_id> temperature ">" 80.0 --severity critical
+```
 
-## 🖤 BlackRoad Empire
+### Queue a firmware update
+```bash
+python src/iot_device_manager.py firmware queue <device_id> 3.1.0 sha256:abc123
+```
 
-Part of 350+ products across 46 categories. Built with ∞ vision.
+### Process firmware queue
+```bash
+python src/iot_device_manager.py firmware process --limit 10
+```
 
-**BlackRoad OS, Inc.** | Built with Claude
+### View fleet dashboard
+```bash
+python src/iot_device_manager.py dashboard
+```
+
+## Running Tests
+
+```bash
+pytest tests/ --cov=src --cov-report=term-missing
+```
+
+## License
+
+Proprietary — © BlackRoad OS, Inc. All rights reserved.
